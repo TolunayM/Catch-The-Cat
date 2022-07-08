@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         scoreView = findViewById(R.id.scoreView);
         timeView = findViewById(R.id.timeView);
-        score = 0;
         imgView = new ImageView[9];
 
         for(int i = 0; i<9; i++){
@@ -47,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
             imgView[i] = findViewById(resID);
 
         }
-        hideImage();consecutive
+        hideImage();
+
     }
     public void increaseScore(View view){
         if(score == 0){
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         score++;
         scoreView.setText("Your Score: " + score);
     }
+
     public void finishAlert(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Game Over");
@@ -71,11 +72,16 @@ public class MainActivity extends AppCompatActivity {
         alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(MainActivity.this,"Kitten ran away from you because you didn't want to play again",Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this,"No is not an option for kitten " + ("\ud83d\ude3e"),Toast.LENGTH_LONG).show();
+                score = 0;
+
                 handler.removeCallbacks(runnable);
-                for(ImageView image : imgView){
+
+                /*for(ImageView image : imgView){
                     image.setVisibility(View.INVISIBLE);
-                }
+
+                }*/
+
 
             }
         });
@@ -83,7 +89,9 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
 
 
-    }
+        }
+
+
     public void startTimer(){
         new CountDownTimer(30000,1000) {
             @Override
@@ -108,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
                     image.setVisibility(View.INVISIBLE);
                 }
 
-                //TODO Gelen randomlari oncekinden farkli yap
                 Random randomImage = new Random();
                 int i = randomImage.nextInt(9);
                 imgView[i].setVisibility(View.VISIBLE);
